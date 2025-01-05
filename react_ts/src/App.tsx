@@ -99,7 +99,7 @@ function App() {
                         </Badge>
                     </Toolbar>
                 </AppBar>
-                <Box className="min-w-[450px] max-w=[750px] my-[5px]">
+                <Box className="min-w-[450px] max-w-[750px] my-[5px]">
                     <Box>
                         <Paper>
                             <Stack direction="row" spacing={0.5} sx={{justifyContent: 'center', padding: '15px 0'}}>
