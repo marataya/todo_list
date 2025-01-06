@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {ButtonModule} from 'primeng/button';
 import {RippleModule} from 'primeng/ripple';
 import {ToolbarModule} from 'primeng/toolbar';
@@ -46,7 +46,7 @@ import {MatCheckbox} from '@angular/material/checkbox';
       </div>
 
       <div class="tableContainer">
-        <table mat-table [dataSource]="items" class="mat-elevation-z3 w-full">
+        <table mat-table #table [dataSource]="items" class="mat-elevation-z3 w-full">
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>#</th>
             <td mat-cell *matCellDef="let i = index">{{ i + 1 }}</td>
@@ -74,7 +74,8 @@ import {MatCheckbox} from '@angular/material/checkbox';
   `
 })
 export class AppComponent {
-  newTodoInput: string;
+  newTodoInput: string = "";
+  @ViewChild(MatTable) table!: MatTable<TodoItem>;
 
   private list = new TodoList("Bob", [
     new TodoItem("Go for run", true),
@@ -98,7 +99,7 @@ export class AppComponent {
     if (newItem != "") {
       this.list.addItem(newItem);
     }
-    console.log(this.items);
+    this.table.renderRows();
   }
 
   showAlert(value: any) {
