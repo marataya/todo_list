@@ -18,15 +18,16 @@ import {
   MatTable
 } from '@angular/material/table';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-root',
-  imports: [ButtonModule, RippleModule, ToolbarModule, OverlayBadgeModule, InputTextModule, FormsModule, MatIcon, MatTable, MatCheckbox, MatHeaderCellDef, MatCellDef, MatHeaderRowDef, MatRowDef, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow],
+  imports: [ButtonModule, RippleModule, ToolbarModule, OverlayBadgeModule, InputTextModule, FormsModule, MatIcon, MatTable, MatCheckbox, MatHeaderCellDef, MatCellDef, MatHeaderRowDef, MatRowDef, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatSlideToggle],
   template: `
     <div>
       <p-toolbar>
         <!--    Toolbar -->
-        <div class="flex flex-row w-full justify-between items-center mx-3">
+        <div class="w-full flex flex-row justify-between items-center mx-3">
           <div class="m-auto text-center flex-1">
             <div class="text-5xl font-bold">Todo List</div>
           </div>
@@ -36,14 +37,15 @@ import {MatCheckbox} from '@angular/material/checkbox';
         </div>
       </p-toolbar>
       <!--    Add Todo panel -->
-      <div class="flex flex-row justify-between w-[100%] py-[15px] px-[5px] border-2 border-green-500">
+      <div class="flex flex-row justify-between w-full py-[15px] px-[5px] border-2 border-green-500">
         <input type="text" pInputText [(ngModel)]="newTodoInput" class="flex-1 m-1"/>
-        <p-button label="Add" [rounded]="true" [raised]="true" size="large" class="min-w-[150px]" fluid
+        <p-button label="Add" [rounded]="true" [raised]="true" size="large" fluid
                   (click)="addItem(newTodoInput); newTodoInput='';"
         />
       </div>
       <div class="flex flex-col items-center gap-2">
       </div>
+      <!--      Table -->
 
       <div class="tableContainer">
         <table mat-table #table [dataSource]="items" class="mat-elevation-z3 w-full">
@@ -69,13 +71,18 @@ import {MatCheckbox} from '@angular/material/checkbox';
           <tr mat-row *matRowDef="let row; columns: ['id', 'task', 'done'];"></tr>
         </table>
       </div>
-
+      <!--     showComplete action -->
+      <div class="flex flex-row justify-center m-[15px]">
+        <mat-slide-toggle [(ngModel)]="showComplete" class="">Show Completed Items</mat-slide-toggle>
+      </div>
     </div>
   `
 })
 export class AppComponent {
   newTodoInput: string = "";
   @ViewChild(MatTable) table!: MatTable<TodoItem>;
+  showComplete: boolean = true;
+
 
   private list = new TodoList("Bob", [
     new TodoItem("Go for run", true),
@@ -92,7 +99,7 @@ export class AppComponent {
   }
 
   get items(): readonly TodoItem[] {
-    return this.list.items;
+    return this.list.items.filter(item => this.showComplete || !item.complete);
   }
 
   addItem(newItem: string):void {
@@ -100,9 +107,5 @@ export class AppComponent {
       this.list.addItem(newItem);
     }
     this.table.renderRows();
-  }
-
-  showAlert(value: any) {
-    alert(value);
   }
 }
