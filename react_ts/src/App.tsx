@@ -88,8 +88,8 @@ function App() {
         <StyledEngineProvider injectFirst>
             <CssBaseline enableColorScheme/>
 
-            <Container maxWidth='md'>
-                <AppBar position="static" className="min-w-[450px] max-w=[750px]">
+            <Container maxWidth='md' className="min-w-[450px]">
+                <AppBar position="static">
                     <Toolbar sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Container sx={{textAlign: 'center'}}>
                             <Typography variant="h2">Todo List</Typography>
@@ -99,25 +99,23 @@ function App() {
                         </Badge>
                     </Toolbar>
                 </AppBar>
-                <Box className="min-w-[450px] max-w-[750px] my-[5px]">
-                    <Box>
-                        <Paper>
-                            <Stack direction="row" spacing={0.5} sx={{justifyContent: 'center', padding: '15px 0'}}>
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Enter new todo"
-                                    variant="outlined"
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                        newItemText.current = event.target.value;
-                                    }}
-                                />
-                                <Button variant="contained" className="min-w-[150px]"
-                                        onClick={() => {
-                                            createNewTodo();
-                                        }}>Add</Button>
-                            </Stack>
-                        </Paper>
-                    </Box>
+                <Box >
+                    <Paper>
+                        <Stack direction="row" spacing={0.5} sx={{justifyContent: 'center', padding: '15px 0'}}>
+                            <TextField
+                                id="outlined-basic"
+                                label="Enter new todo"
+                                variant="outlined"
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                    newItemText.current = event.target.value;
+                                }}
+                            />
+                            <Button variant="contained" className="min-w-[150px]"
+                                    onClick={() => {
+                                        createNewTodo();
+                                    }}>Add</Button>
+                        </Stack>
+                    </Paper>
 
 
                     <Box>
